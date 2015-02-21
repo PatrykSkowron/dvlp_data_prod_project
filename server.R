@@ -3,14 +3,11 @@ require(quantmod)
 require(googleVis)
 require(ggplot2)
 require(knitr)
+require(WDI)
 # server.R
 
-#library(quantmod)
-#source("helpers.R")
-
-
 shinyServer(function(input, output) {
-  dataInput<-reactive({WDI(indicator='NY.GDP.MKTP.KD',  start=1960, end=2014) #,extra=T
+  dataInput<-reactive({WDI(indicator='NY.GDP.MKTP.KD',  start=1960, end=2014)
 })
   
 output$select.choices<-renderUI({
@@ -49,6 +46,6 @@ output$plot <- renderGvis({
   }
   if(input$radio.type==2) g<-gvisLineChart(finalInput(),xvar="year",yvar="Global.GDP",options=list(title=paste(input$select.country),vAxis="{title:'Share of global GDP (%)',format:'#.###%'}",hAxis="{title:'Year'}"))
   return(g)
-})#=paste("{title:'GDP in US $',format:'###### $',logScale:)}",input$ch.logy,sep="")
+})
 
 })
